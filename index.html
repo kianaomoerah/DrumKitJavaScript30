@@ -60,59 +60,57 @@
 <script>
     
 function playSound(e) {
-
-          // listening to a keydown event, which when that event happens will trigger the callback function
-          // console.log(e)
-
-          const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`)
-          // query selecting the audio attribute, using the keydown event using bracket notation to dynamically select the audio assocaited with the key
-          // note that you need quotes, likely because it is looking for a variable exactly called e.keyCode but this is dynamic 
-
-          // console.log(audio)
-          // we see the corresponding audio element assocaited with the key (if there is no audio you get "null" in the console)
-
-          const key = document.querySelector(`.key[data-key="${e.keyCode}"]`)
-
-          if (!audio) return;
-          // stop the function from running all together, if there is no corresponding key 
-
-          audio.currentTime = 0;
-          // allows us to hit the keys in succession, by rewinding the sound to the start
-          audio.play();
-
-          key.classList.add('playing');
-          // same ass key.addClass("playing") with jquery
-      }
-
-      function removeTransition(e) {
-
-        // console.log(e);
-        
-        if(e.propertyName !== 'transform') return;
-          // skip it if it's not a transform i.e. only show me the event for transform not the events for the border etc.
-        
-          // console.log(e.propertyName);
-
-        // console.log(this)
-          // this = the key, which is what called the event 
-        
-          this.classList.remove('playing');
-            // allows us to remove the playing class once the key has finished transforming
-      }
-
-        
-      // transition end - allows us to listen to each key when the animation ends 
-
-      const keys = document.querySelectorAll('.key')
-        // gives us an array of each matching element 
-
-        // want to listen for the end of transition 
-        keys.forEach( key => key.addEventListener('transitionend', removeTransition));
-
-        window.addEventListener("keydown", playSound);
-        
     
+const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`)
+  // query selecting the audio attribute, using the keydown event using bracket notation to dynamically select the audio assocaited with the key
+  // note that you need quotes, likely because it is looking for a variable exactly called e.keyCode but this is dynamic 
+
+  // console.log(audio)
+  // we see the corresponding audio element assocaited with the key (if there is no audio you get "null" in the console)
+
+const key = document.querySelector(`.key[data-key="${e.keyCode}"]`)
+
+if (!audio) return;
+  // stop the function from running all together, if there is no corresponding key 
+
+audio.currentTime = 0;
+  // allows us to hit the keys in succession, by rewinding the sound to the start
+
+audio.play();
+
+key.classList.add('playing');
+  // same ass key.addClass("playing") with jquery
+}
+
+
+function removeTransition(e) {
+
+// console.log(e);
         
+if(e.propertyName !== 'transform') return;
+  // skip it if it's not a transform i.e. only show me the event for transform not the events for the border etc.
+        
+  // console.log(e.propertyName);
+
+  // console.log(this)
+    // this = the key, which is what called the event 
+this.classList.remove('playing');
+    // allows us to remove the playing class once the key has finished transforming
+}
+
+        
+// transition end - allows us to listen to each key when the animation ends 
+
+const keys = document.querySelectorAll('.key')
+  // gives us an array of each matching element 
+
+keys.forEach( key => key.addEventListener('transitionend', removeTransition));
+  // want to listen for the end of transition 
+  // this works the same as the animation end event 
+
+window.addEventListener("keydown", playSound);
+  // listening to a keydown event, which when that event happens will trigger the callback function
+         
 </script>
 
 
